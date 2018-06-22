@@ -13,7 +13,8 @@ setup(
         'oslo.config',
         'oslo.service',
         'flask',
-        'futures'
+        'futures',
+        'requests'
         ],
     scripts = [],
     package_data = {}
