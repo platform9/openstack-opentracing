@@ -4,6 +4,7 @@ from oslo_serialization import jsonutils
 from oslo_middleware.base import ConfigurableMiddleware
 from opentracing_instrumentation.client_hooks import install_patches
 from opentracing_instrumentation.request_context import RequestContextManager
+from opentracing_instrumentation.http_server import before_request, WSGIRequestWrapper
 from jaeger_client import Config
 from jaeger_client.reporter import Reporter, CompositeReporter
 from . import eventlet_tracer
@@ -29,6 +30,7 @@ def _start_reporter_loop(tracer, config):
             tags=tracer.tags,
             max_length=tracer.max_tag_value_length,
         )
+        print "Registering the service name %s " % (tracer.service_name)
 
     for reporter in direct_reporters:
         reporter._consume_queue()
@@ -80,12 +82,21 @@ class JaegerMiddleware(ConfigurableMiddleware):
     
     @webob.dec.wsgify()
     def __call__(self, request):
-        info = {
-           "path": request.path,
-           "method": request.method
-        }
-        with opentracing.tracer.start_span(operation_name=request.path) as span:
-            span.log_kv(info)
-            with RequestContextManager(span) as ctxt:
-                response = request.get_response(self.application)
-                return self.process_response(response)
+        try:
+            new_request = WSGIRequestWrapper.from_wsgi_environ(request.environ)
+            info = {
+                "path": request.path,
+                "method": request.method
+            }
+            with before_request(new_request) as span:
+                span.log_kv(info)
+                with RequestContextManager(span) as ctxt:
+                    response = request.get_response(self.application)
+                    return self.process_response(response)
+        except:
+            # TODO: Use logging instead of stdout
+            import sys,traceback
+            e = sys.exc_info()[0]
+            print "Error: %s" % str(e)
+            traceback.print_exc(file=sys.stdout)
+            raise
