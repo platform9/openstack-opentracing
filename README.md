@@ -2,10 +2,24 @@
 This library provides a simple (alpha quality) implementation of a wsgi middleware that can be inserted into
 OpenStack APIs and can provide rudimentary tracing.
 
+## Jaegertracing
+
+More information is available here, here is a quick overview of the overall architecture:
+
+![Architecture](https://www.jaegertracing.io/img/architecture.png)
+
 ## How to
 
 ### Install Jager tracing all in one
+```bash 
 docker run --name jaeger  -p 5775:5775/udp -p 5778:5778 -p 14268:14268 -p 6831:6831/udp -p 6832:6832/udp -p 16686:16686 jaegertracing/all-in-one:latest
+```
+
+__Important__:
+The current jaeger_middleware is configured to use remote controlled sampling. It will only be turned on when the jaeger 
+collector service is running (see above), this is to make sure that no sampling is done unless there is a listener.
+
+
 
 ### Install openstack-opentracing
 
@@ -23,12 +37,12 @@ Edit your paste.ini file and insert a new filter and add the filter to the pipel
 ```bash
 [filter:jaeger_v1]
 paste.filter_factory = openstack_opentracing.jaeger_middleware:JaegerMiddleware.factory
-config.sampler.type = const
-config.sampler.param = 1
-config.logging = True
+config.logging = False
 config.local_agent.reporting_host = 127.0.0.1
-config.local_agent.reporting_port = 6831
-service_name = keystone
+config.local_agent.reporting_port = 32769
+config.local_agent.sampling_port = 32770
+config.local_agent.sampling_host = 127.0.0.1
+service_name = Server1
 validate = True
 
 [pipeline:public_api]
@@ -42,6 +56,8 @@ pipeline = sizelimit url_normalize request_id build_auth_context jaeger_v1 token
 ```bash
 sudo service openstack-nova-api restart
 ```
+Wait for a minute (default sampling refresh interval) and start making request.
+
 
 ## Check the UI
 
@@ -52,14 +68,16 @@ I SSH into the DU and use the port forwarding
 ```bash
 ssh -L 14268:127.0.0.1:14268 -L 16686:127.0.0.1:16686 pf9-test.platform9.net
 ```
+### Screenshots
+![Span Example1](docs/openstack-2.png)
+![Span Example2](docs/openstack-1.png)
 
 # Code
 There is only one file which is interesting jaeger_middleware, which provides the middleware.
 Check the test directory for a working example of a distributed tracing example which uses the middleware and uses oslo.* libraries. This will give you a good starting point.
 
-# TODO
-Many many things
-* Tracing between services is not working, probably because of some monkey patching gone wrong, this needs to be debugged
-* Jaeger client library are tornado based and don't like eventlet, there is a lot of hacking in jaeger_middleware which can be immensly simplified.
-* the sampling is pretty nasty, it can collect ton of data in a very duration, the sampling should be probablistic and 'remote controlled': this needs to be investigated
-* how to run a jaeger server ?? (not the simple all-in-one).
+# Ugly stuff
+
+* Most of the code is to make sure 'eventlet ' services like OpenStack can work with jaeger_client library
+primarly because jaeger_client assumes tornado. This is ugly and
+would need to change as jaeger_client rids itself of tornado dependency
