@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/platform9-incubator/openstack-opentracing.svg?branch=master)](https://travis-ci.org/platform9-incubator/openstack-opentracing)
+[![Build Status](https://travis-ci.org/platform9-incubator/openstack-opentracing.svg?branch=ver-0.1)](https://travis-ci.org/platform9-incubator/openstack-opentracing)
 # openstack-opentracing
 This library provides a simple (alpha quality) implementation of a wsgi middleware that can be inserted into
 OpenStack APIs and can provide rudimentary tracing.
