@@ -1,0 +1,14 @@
+language: python
+python:
+- '2.7'
+install:
+- pip install .
+deploy:
+  provider: pypi
+  user: platform9
+  password:
+    secure: H/PrB1kma0c8u4uZf/8MHlRoGRTr4a/xcZcdonFYRVy+q7wUB5dMHfhdsY186NuZzG3KHe9EfwPGoyai3If6sywF0fTqXuSFvrCwrIlJ+SLaB4r75y7TtKW8BOmA1Bj3GaH50t4bnQYbv6BEJjmJnKWlv5Ix8axfGdimWSiIfqk4iKIJcnLngQb9z/wQCWdxcZKWW1ziNyKdFQzUy3D6u78977e6J+x1J/sHGG32vT7m9KBOOILIWaT2kuFG8d40Q926yrN4Y1+0PlheXZyzgBFgeRJP5YTii9nQRGHunrOVW3JnjNLR8trlKMumOet2k5nbmzICV0mXWI0HmLGcidVTBPxVhozTPId/cpe7HBtuIsXkxv3Bci+aQJK4cyorarMSFZQUV7z1+gkJ3Hhr1A+/wBzjo7/1+hrJzL2Jikc9gNbnKfYDM5/u8zH0DRN468paX2px9hjb3ZHpe/MiG6J0IuBnrFkql5z8b3X/yI6ycQV0HlqnT/NfeE5J/9bjDgX/SqSElBv8yBkZ8BJpYtay0qG5U11rDcdri43ob10Rhxqq4sWBZD2GBLv3kryyUji+mG2CN6aqoaJOK5pG4tQvzxnwOeBjqoMlNO1dav1MoVvdy17U3sWQ0h21/B470VhMzvtiVFhH0KunSf6HOF8vwNfO+A7OZgq+lk99mEs=
+  on:
+    branch: ver-0.1
+script:
+  - echo "Done"

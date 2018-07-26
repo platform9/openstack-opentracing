@@ -1,6 +1,13 @@
+[![Build Status](https://travis-ci.org/platform9-incubator/openstack-opentracing.svg?branch=master)](https://travis-ci.org/platform9-incubator/openstack-opentracing)
 # openstack-opentracing
 This library provides a simple (alpha quality) implementation of a wsgi middleware that can be inserted into
 OpenStack APIs and can provide rudimentary tracing.
+
+##Why
+Finding performance issues as at macro level is very difficult in a distributed system and it helps to find
+which service is to blame. Opentracing has emerged as a standard with Zipkin & Jaeger as two primary implementation.
+
+For the purposes of this project we have explored Jaegertracing as the framework for the experiment.
 
 ## Jaegertracing
 
