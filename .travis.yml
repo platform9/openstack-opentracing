@@ -4,11 +4,15 @@ python:
 install:
 - pip install .
 deploy:
-  provider: pypi
-  user: platform9
-  password:
-    secure: Yr7rXWjfyihMi7RlM3me/278yjO2RjgWHozcs/b3qzuEGVtAnuMBchYlIK80dVKnbjY0ZktZ+PJZc14NSCxQwKZT2NpDKEsfyx389MAtU3QJ3tQtseA22ArRoJjO3qez2hP4rm/H+DaZdV6x+/hnLIfzNipGlP4E2gqRezGJuoSb+mic8lT69lRSsMzgQUkcYm9Iux3YGkw2NQZlPL53I9lrhz5ysvIWzUPhh5rtCj0Em9klkGRm0P0LzyfzQbQ91JeVlBNk4ye6emgeqQ2GyhEiyia2ylUzkd+keJK7e5tV8l7jVzBNmDCcIRzasXv/S7VVVTA3veQCieHsyTtsv8kZzH5HH9dqqBTCMeey96uiXHqGiMfXXtFYln1Ld4cP96r1P+TSMlzJANoXezjGsnGkgIi69E/QhH7nk6Gb71bilBI40gDrjdW+zLz0MMHy1hD0RQSLzvegMrLuHnqEkkxWJetZW57KI9C1orK2ObYyyxE1mXuHj4MNfzYCBoow4GljWoyy/s5pcLVdYZ5YGSLSyaxZgQo/aEYHw7xptSnQRMv089vNF/43nQzlezVIYYPRHAcCKV9wd44Dze9J66B4Gk3Dc2TiWpXlBeuY4zMQdlWIaTFaDEno/RioZPk+xhPCBT+98OpJhkH6JXCZGEgfvWrcsMANcsWuvoohONU=
-  on:
-    branch: ver-0.1
+  - provider: pypi
+    user: platform9
+    password:
+      secure: Yr7rXWjfyihMi7RlM3me/278yjO2RjgWHozcs/b3qzuEGVtAnuMBchYlIK80dVKnbjY0ZktZ+PJZc14NSCxQwKZT2NpDKEsfyx389MAtU3QJ3tQtseA22ArRoJjO3qez2hP4rm/H+DaZdV6x+/hnLIfzNipGlP4E2gqRezGJuoSb+mic8lT69lRSsMzgQUkcYm9Iux3YGkw2NQZlPL53I9lrhz5ysvIWzUPhh5rtCj0Em9klkGRm0P0LzyfzQbQ91JeVlBNk4ye6emgeqQ2GyhEiyia2ylUzkd+keJK7e5tV8l7jVzBNmDCcIRzasXv/S7VVVTA3veQCieHsyTtsv8kZzH5HH9dqqBTCMeey96uiXHqGiMfXXtFYln1Ld4cP96r1P+TSMlzJANoXezjGsnGkgIi69E/QhH7nk6Gb71bilBI40gDrjdW+zLz0MMHy1hD0RQSLzvegMrLuHnqEkkxWJetZW57KI9C1orK2ObYyyxE1mXuHj4MNfzYCBoow4GljWoyy/s5pcLVdYZ5YGSLSyaxZgQo/aEYHw7xptSnQRMv089vNF/43nQzlezVIYYPRHAcCKV9wd44Dze9J66B4Gk3Dc2TiWpXlBeuY4zMQdlWIaTFaDEno/RioZPk+xhPCBT+98OpJhkH6JXCZGEgfvWrcsMANcsWuvoohONU=
+    on:
+      # only deploy on tags
+      tags: true
+      branch: 
+        - ver-0.1
+        - /v?(\d+\.)?(\d+\.)?(\*|\d+)$/
 script:
 - echo "Done"
