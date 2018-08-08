@@ -4,11 +4,15 @@ python:
 install:
 - pip install .
 deploy:
-  provider: pypi
-  user: platform9
-  password:
-    secure: MZPBmxkuFOwdIU+p6/r/eLo3GXE0FFnVhmkM4qzx2Nva0vfUtF1rIZLaa3GK5U/OuGEVlxdnFnkHduyiZFNEvVBS8sEw1WXeItt7K+EBil6HQiWSA4YVHx/51Tra5W5qfZ/md9yBAtb2tFa12zvM/yDEtv/uFiWYG/rlx75OIm2glDdn13Wwre4i5kP0VrX050VMSR1eTrlQ3kkIabIIfQBkYYrLBtZpqZPGcsiHxFK6Lk7EVd8SPWnpdcfExWswmoeSlM3HS2G1Pzpy3Dvl4pVukp9h+TC9uGrV+FUPm7jvo7GEy4P2HAmHpFaKPMj7GcwQXOYBigXIxiB0f2/DYUoaZiB6V+gkvp2qd3AqJ6fScNOUTJ6UiuYXkPudyozQQ+prUZyOY101CfJpT/FUIUwHhnMOrgnw1yftymZrJyzSjY0fxJGcA6yAnPqkKzvnqLuQwoKMj7rZaHVq3ITpv6YOwYtuid8wmR2wNRPAPGGYzFMGfbRgzlgmTH5v0v5Ya4zhW8D4xYc0Tl+Vs/XstQxh4c1C5w6uP4ldEqqA6SI+ii7wpKJOKVKhGYMFcbbDOjC0S371ndCrWGaYqAKD64jmZ3pCXUyDXmRBHc2qy8fkgkH1snXJMqXS/ftC5QJI0TLOGN/GJD0KCtkiqiyNyQnxWDmqT0MmeEWHkLmsDcI=
-  on:
-    branch: ver-0.1
+  - provider: pypi
+    user: platform9
+    password:
+      secure: Yr7rXWjfyihMi7RlM3me/278yjO2RjgWHozcs/b3qzuEGVtAnuMBchYlIK80dVKnbjY0ZktZ+PJZc14NSCxQwKZT2NpDKEsfyx389MAtU3QJ3tQtseA22ArRoJjO3qez2hP4rm/H+DaZdV6x+/hnLIfzNipGlP4E2gqRezGJuoSb+mic8lT69lRSsMzgQUkcYm9Iux3YGkw2NQZlPL53I9lrhz5ysvIWzUPhh5rtCj0Em9klkGRm0P0LzyfzQbQ91JeVlBNk4ye6emgeqQ2GyhEiyia2ylUzkd+keJK7e5tV8l7jVzBNmDCcIRzasXv/S7VVVTA3veQCieHsyTtsv8kZzH5HH9dqqBTCMeey96uiXHqGiMfXXtFYln1Ld4cP96r1P+TSMlzJANoXezjGsnGkgIi69E/QhH7nk6Gb71bilBI40gDrjdW+zLz0MMHy1hD0RQSLzvegMrLuHnqEkkxWJetZW57KI9C1orK2ObYyyxE1mXuHj4MNfzYCBoow4GljWoyy/s5pcLVdYZ5YGSLSyaxZgQo/aEYHw7xptSnQRMv089vNF/43nQzlezVIYYPRHAcCKV9wd44Dze9J66B4Gk3Dc2TiWpXlBeuY4zMQdlWIaTFaDEno/RioZPk+xhPCBT+98OpJhkH6JXCZGEgfvWrcsMANcsWuvoohONU=
+    on:
+      # only deploy on tags
+      tags: true
+      branch: 
+        - ver-0.1
+        - /v?(\d+\.)?(\d+\.)?(\*|\d+)$/
 script:
 - echo "Done"

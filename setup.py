@@ -4,8 +4,8 @@ from setuptools import setup
 import os
 setup(
     name = 'openstack_opentracing',
-    version = '0.1.%s' % (os.getenv('TRAVIS_BUILD_NUMBER', '0')),
     packages = ['openstack_opentracing', 'openstack_opentracing/test'],
+    setup_requires=['pbr'],
     install_requires = [
         'jaeger_client==3.10.0',
         'opentracing_instrumentation==2.4.1',
@@ -18,5 +18,6 @@ setup(
         'requests>=2.10.0'
         ],
     scripts = [],
-    package_data = {}
+    package_data = {},
+    pbr=True
 )
