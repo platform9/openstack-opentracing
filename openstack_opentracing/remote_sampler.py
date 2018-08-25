@@ -71,7 +71,9 @@ class EventletRemoteControlledSampler(Sampler):
         self.running = True
         self.periodic = None
 
-        self._next_poll()
+
+        self._next_poll(True)
+
 
     def _setup_default_sampling(self):
         """
@@ -87,7 +89,7 @@ class EventletRemoteControlledSampler(Sampler):
         with self.lock:
             return self.sampler.is_sampled(trace_id, operation)
 
-    def _next_poll(self):
+    def _next_poll(self, first_poll=False):
         """
         Bootstrap polling for sampling strategy.
 
@@ -96,6 +98,7 @@ class EventletRemoteControlledSampler(Sampler):
         """
         with self.lock:
             if self.running: # This flag will make the polling stop once a close is called
+                if !
                 r = random.Random()
                 delay = r.random() * self.sampling_refresh_interval
                 eventlet.spawn_after(delay, self._sampling_request)
