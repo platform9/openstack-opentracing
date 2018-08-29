@@ -17,7 +17,7 @@ def start_server1():
     CONF = cfg.CONF
     print "Starting Server 1"
     server1 = start_server(CONF, '/Users/rparikh/work/misc/openstack-opentracing/openstack_opentracing/test/test-paste.ini', 2326)
-    time.sleep(200)
+    time.sleep(2000)
 
 if __name__ == "__main__":
     start_server1()

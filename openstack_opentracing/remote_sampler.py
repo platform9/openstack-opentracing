@@ -98,7 +98,6 @@ class EventletRemoteControlledSampler(Sampler):
         """
         with self.lock:
             if self.running: # This flag will make the polling stop once a close is called
-                if !
                 r = random.Random()
                 delay = r.random() * self.sampling_refresh_interval
                 eventlet.spawn_after(delay, self._sampling_request)
