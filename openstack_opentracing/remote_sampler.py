@@ -65,13 +65,11 @@ class EventletRemoteControlledSampler(Sampler):
         self.local_agent_sampling_host = kwargs.get('sampling_host')
         self.local_agent_sampling_port = kwargs.get('sampling_port')
 
-        self._setup_default_sampling()
 
         self.lock = Lock()
         self.running = True
         self.periodic = None
-
-
+        self._setup_default_sampling()
         self._next_poll(True)
 
 
@@ -80,10 +78,9 @@ class EventletRemoteControlledSampler(Sampler):
         Setup default sampling of zero probablistic sampling
         :return:
         """
-        if self.sampler is None:
+        with self.lock:
             self.sampler = ProbabilisticSampler(ZERO_SAMPLING_PROBABILITY)
-        else:
-            self.sampler.is_sampled(0)  # assert we got valid sampler API
+            self.logger.info("Replacing sampler to %s", self.sampler)
 
     def is_sampled(self, trace_id, operation=''):
         with self.lock:
@@ -116,7 +113,6 @@ class EventletRemoteControlledSampler(Sampler):
             #response = requests.get(url)
             sampling_strategies_response = json.loads(text)
             self._update_sampler(sampling_strategies_response)
-            self.logger.debug('Tracing sampler set to %s', self.sampler)
         except:
             # Expect this to be the normal case use the error_reporter to only log it every 15 min
             self.error_reporter.error(
@@ -167,6 +163,7 @@ class EventletRemoteControlledSampler(Sampler):
 
         if self.sampler != new_sampler:
             self.sampler = new_sampler
+            self.logger.info("Replacing sampler to %s", self.sampler)
 
 
     def close(self):
