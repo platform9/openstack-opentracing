@@ -65,12 +65,11 @@ class EventletRemoteControlledSampler(Sampler):
         self.local_agent_sampling_host = kwargs.get('sampling_host')
         self.local_agent_sampling_port = kwargs.get('sampling_port')
 
-
+        self.sampling_thread = None
         self.lock = Lock()
         self.running = True
         self.periodic = None
         self._setup_default_sampling()
-        self._next_poll(True)
 
 
     def _setup_default_sampling(self):
@@ -83,10 +82,17 @@ class EventletRemoteControlledSampler(Sampler):
             self.logger.info("Replacing sampler to %s", self.sampler)
 
     def is_sampled(self, trace_id, operation=''):
+        start_sampling = False
         with self.lock:
-            return self.sampler.is_sampled(trace_id, operation)
+            if not self.sampling_thread:
+                start_sampling = True
+            ret = self.sampler.is_sampled(trace_id, operation)
 
-    def _next_poll(self, first_poll=False):
+        if start_sampling:
+            self._next_poll()
+        return ret
+
+    def _next_poll(self):
         """
         Bootstrap polling for sampling strategy.
 
@@ -97,7 +103,7 @@ class EventletRemoteControlledSampler(Sampler):
             if self.running: # This flag will make the polling stop once a close is called
                 r = random.Random()
                 delay = r.random() * self.sampling_refresh_interval
-                eventlet.spawn_after(delay, self._sampling_request)
+                self.sampling_thread = eventlet.spawn_after(delay, self._sampling_request)
 
     def _sampling_request(self):
         """
