@@ -78,32 +78,32 @@ class EventletRemoteControlledSampler(Sampler):
         :return:
         """
         with self.lock:
-            self.sampler = ProbabilisticSampler(ZERO_SAMPLING_PROBABILITY)
-            self.logger.info("Replacing sampler to %s", self.sampler)
+            new_sampler = ProbabilisticSampler(ZERO_SAMPLING_PROBABILITY)
+            self._replace_sampler(new_sampler)
 
     def is_sampled(self, trace_id, operation=''):
-        start_sampling = False
         with self.lock:
             if not self.sampling_thread:
-                start_sampling = True
+                self.sampling_thread = eventlet.spawn(self._start_poll)
             ret = self.sampler.is_sampled(trace_id, operation)
 
-        if start_sampling:
-            self._next_poll()
         return ret
 
-    def _next_poll(self):
+    def _start_poll(self):
         """
         Bootstrap polling for sampling strategy.
 
         To avoid spiky traffic from the samplers, we use a random delay
         before the first poll.
         """
-        with self.lock:
-            if self.running: # This flag will make the polling stop once a close is called
-                r = random.Random()
-                delay = r.random() * self.sampling_refresh_interval
-                self.sampling_thread = eventlet.spawn_after(delay, self._sampling_request)
+        while True:
+            with self.lock:
+                if self.running: # This flag will make the polling stop once a close is called
+                    r = random.Random()
+                    eventlet.spawn(self._sampling_request)
+                else:
+                    break
+            eventlet.sleep(self.sampling_refresh_interval)
 
     def _sampling_request(self):
         """
@@ -125,8 +125,6 @@ class EventletRemoteControlledSampler(Sampler):
                 'Fail to get or parse sampling strategy '
                 'from jaeger-agent, stopping the sampling')
             self._setup_default_sampling()
-        finally:
-            self._next_poll()
 
 
     def _update_sampler(self, response):
@@ -167,10 +165,14 @@ class EventletRemoteControlledSampler(Sampler):
         else:
             raise ValueError('Unsupported sampling strategy type: %s' % s_type)
 
+        self._replace_sampler(new_sampler)
+
+
+    def _replace_sampler(self, new_sampler):
+
         if self.sampler != new_sampler:
             self.sampler = new_sampler
             self.logger.info("Replacing sampler to %s", self.sampler)
-
 
     def close(self):
         """
