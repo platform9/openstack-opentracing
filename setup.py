@@ -5,7 +5,6 @@ import os
 setup(
     name = 'openstack_opentracing',
     packages = ['openstack_opentracing', 'openstack_opentracing/test'],
-    setup_requires=['pbr'],
     install_requires = [
         'jaeger_client==3.10.0',
         'opentracing_instrumentation==2.4.1',
@@ -15,9 +14,10 @@ setup(
         'oslo.service>=1.10.0',
         'flask>=0.10.0',
         'futures',
-        'requests>=2.10.0'
+        'requests>=2.10.0',
+        'pytest'
         ],
     scripts = [],
     package_data = {},
-    pbr=True
+    version='0.1.41'
 )
