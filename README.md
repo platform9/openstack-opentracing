@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/platform9-incubator/openstack-opentracing.svg?branch=ver-0.1)](https://travis-ci.org/platform9-incubator/openstack-opentracing)
+[![Build Status](https://travis-ci.org/platform9/openstack-opentracing.svg?branch=ver-0.1)](https://travis-ci.org/platform9/openstack-opentracing)
 # openstack-opentracing
 This library provides a simple (alpha quality) implementation of a wsgi middleware that can be inserted into
 OpenStack APIs and can provide rudimentary tracing.
@@ -35,7 +35,7 @@ Activate your virtualenv
 ```bash
 source /opt/pf9/nova/bin/activate
 cd /opt/pf9/nova/bin/
-./python ./pip install git+https://github.com/platform9-incubator/openstack-opentracing.git
+./python ./pip install openstack-opentracing
 ```
 
 ### Configure your service
@@ -82,6 +82,9 @@ ssh -L 14268:127.0.0.1:14268 -L 16686:127.0.0.1:16686 pf9-test.platform9.net
 # Code
 There is only one file which is interesting jaeger_middleware, which provides the middleware.
 Check the test directory for a working example of a distributed tracing example which uses the middleware and uses oslo.* libraries. This will give you a good starting point.
+
+## Build
+Builds are done through travis-ci (see the build link on top of this page). Build steps include pip install, but also includes an integration test that starts 3 servers and checks for spans recorded in the jaeger server.
 
 # Ugly stuff
 
