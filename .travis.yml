@@ -1,8 +1,14 @@
 language: python
 python:
 - '2.7'
+services:
+- docker
 install:
 - pip install .
+before_script:
+- docker run -d --name jaeger -p 5775:5775/udp -p 5778:5778 -p 14268:14268 -p 6831:6831/udp -p 6832:6832/udp -p 16686:16686 jaegertracing/all-in-one:latest
+script:
+- pytest
 deploy:
   - provider: pypi
     skip_cleanup: true
@@ -15,5 +21,3 @@ deploy:
       branch: 
         - ver-0.1
         - /v?(\d+\.)?(\d+\.)?(\*|\d+)$/
-script:
-- echo "Done"

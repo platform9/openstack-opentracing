@@ -5,7 +5,6 @@ from server3 import start_server3
 from multiprocessing import Process
 from subprocess import call
 from server1 import start_server1
-eventlet.monkey_patch()
 
 
 def setup_test():
