@@ -1,6 +1,7 @@
 
 from flask import Flask
 import requests
+import sys
 app = Flask(__name__)
 app.debug = True
 
@@ -21,6 +22,12 @@ def check():
     print "Check called"
     resp = requests.get('http://www.google.com')
     return "Check succeeded"
+
+@app.route('/exit')
+def exit_system():
+    print "exit called"
+    sys.exit()
+
 
 def app_factory(global_config, **local_conf):
     return app

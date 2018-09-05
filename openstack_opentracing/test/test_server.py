@@ -5,6 +5,10 @@ from server2 import start_server2
 from server3 import start_server3
 from multiprocessing import Process
 from subprocess import call
+import eventlet
+
+eventlet.monkey_patch()
+
 
 def setup_test():
     p1 = Process(target=start_server1)
@@ -30,10 +34,15 @@ def perform_tests():
             print "Error %s " % str(resp.status_code)
         else:
             print "Passed Test: %s" % str(resp.text)
+    resp = requests.get('http://127.0.0.1:2326/exit')
+    resp = requests.get('http://127.0.0.1:2327/exit')
+    resp = requests.get('http://127.0.0.1:2328/exit')
+
+def test_e2e():
+    p1, p2, p3 = setup_test()
+    perform_tests()
+    join(p1, p2, p3)
 
 
 if __name__ == "__main__":
-    #p1, p2, p3 = setup_test()
-    perform_tests()
-    #join(p1, p2, p3)
-
+    test_e2e()
