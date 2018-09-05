@@ -1,7 +1,7 @@
 
 from flask import Flask
 import requests
-import sys
+import sys,os,eventlet
 app = Flask(__name__)
 app.debug = True
 
@@ -26,7 +26,8 @@ def check():
 @app.route('/exit')
 def exit_system():
     print "exit called"
-    sys.exit()
+    eventlet.spawn_after(2, os._exit, 0)
+    return "Exit queued"
 
 
 def app_factory(global_config, **local_conf):

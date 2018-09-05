@@ -18,7 +18,7 @@ def setup_test():
     p3 = Process(target=start_server3)
     p3.start()
     # Wait for the services to come up and listen
-    time.sleep(100)
+    time.sleep(30)
     return (p1, p2, p3)
 
 def join(p1, p2, p3):
