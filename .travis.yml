@@ -17,10 +17,8 @@ deploy:
     user: platform9
     password:
       secure: PjumHXO1GR+V4Deeii1grOMlXTSkPPze+99HnayCi7TEX3wYXkcBxmF75PNr+i551ns/zSJcRh48lBgp0FKly/gP7hXUgqgaealRQ9EYIA4Tv3kE+nxvanBw5EQ0IbPt5pXzf1EgVzZz7CgxFZmoMMAKnjjo2bWe0mA528+YVrMv7O3QIMPbYhQ+/XUpPv6i7eeA/Q6bOu0EsE8P3bTSfHhuoAB871+cBiaH1bKe7pZiqG8QzY8I2U6+3Rd7NA742voj2ZgF8P9jNwHhW7xG2vw2DulO4tO94po/2qMDovH6p0alj9fc+adPYmz808qGUPCR6HJhSnUjtu1dwenAwXXtEMxFiVL5fG6gC3w5B3AwytWO1g17sG0KaaOeMQnTQTIaqZJ6U5AdOUKt29b4+9gWs6jgbXIgRNDoXJ7RPapSrOxNVRhJq9Yrpg1CoIdNIMR2CWSxMuSfYrpOnNWEPgt2ZmSuvRjuLmHtcRAlO/ovUsiESDELbIutiUDLEMME+/zVovX+KZOcWw1/NGDupkAZlxr8703IGyGc1Uky2I+Ne7cZgS02k3dOL+vwrpkKLsPN46fL8HlGZyk3+wYygD6p5brTHpzY9iqu3zEVF30bmyA4MmGgPffHiNVHOppiyq11HnV3B1+sQ8Qq6x3mkXJbxtoU+ePb3VAxn5HNYPw=
-    password:
-      secure: Yr7rXWjfyihMi7RlM3me/278yjO2RjgWHozcs/b3qzuEGVtAnuMBchYlIK80dVKnbjY0ZktZ+PJZc14NSCxQwKZT2NpDKEsfyx389MAtU3QJ3tQtseA22ArRoJjO3qez2hP4rm/H+DaZdV6x+/hnLIfzNipGlP4E2gqRezGJuoSb+mic8lT69lRSsMzgQUkcYm9Iux3YGkw2NQZlPL53I9lrhz5ysvIWzUPhh5rtCj0Em9klkGRm0P0LzyfzQbQ91JeVlBNk4ye6emgeqQ2GyhEiyia2ylUzkd+keJK7e5tV8l7jVzBNmDCcIRzasXv/S7VVVTA3veQCieHsyTtsv8kZzH5HH9dqqBTCMeey96uiXHqGiMfXXtFYln1Ld4cP96r1P+TSMlzJANoXezjGsnGkgIi69E/QhH7nk6Gb71bilBI40gDrjdW+zLz0MMHy1hD0RQSLzvegMrLuHnqEkkxWJetZW57KI9C1orK2ObYyyxE1mXuHj4MNfzYCBoow4GljWoyy/s5pcLVdYZ5YGSLSyaxZgQo/aEYHw7xptSnQRMv089vNF/43nQzlezVIYYPRHAcCKV9wd44Dze9J66B4Gk3Dc2TiWpXlBeuY4zMQdlWIaTFaDEno/RioZPk+xhPCBT+98OpJhkH6JXCZGEgfvWrcsMANcsWuvoohONU=
     on:
       tags: true
       branch:
       - ver-0.1
-      - "/v?(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$/"
+      - "/(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$/"
