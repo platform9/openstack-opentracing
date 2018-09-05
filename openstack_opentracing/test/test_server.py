@@ -1,13 +1,10 @@
 
 import requests, time
-from server1 import start_server1
 from server2 import start_server2
 from server3 import start_server3
 from multiprocessing import Process
 from subprocess import call
-import eventlet
-
-eventlet.monkey_patch()
+from server1 import start_server1
 
 
 def setup_test():
@@ -41,7 +38,12 @@ def perform_tests():
 def test_e2e():
     p1, p2, p3 = setup_test()
     perform_tests()
+
     join(p1, p2, p3)
+
+    resp = requests.get('http://127.0.0.1:16686/api/traces?service=Server1&limit=20&lookback=1h&maxDuration&minDuration&service=Server1')
+    data = resp.json()
+    assert (data['data'][0]['spans']) >= 4
 
 
 if __name__ == "__main__":

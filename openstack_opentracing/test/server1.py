@@ -8,6 +8,10 @@ from eventlet import greenthread
 import logging
 from logging.config import dictConfig
 import os
+import eventlet
+
+eventlet.monkey_patch()
+
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 logging_config = dict(
@@ -30,7 +34,6 @@ logging_config = dict(
 logging.config.dictConfig(logging_config)
 
 def start_server(conf, paste_file, port):
-    eventlet.monkey_patch()
     wsgi_app = loadapp('config:%s' % os.path.join(dir_path, paste_file), 'main')
     server = wsgi.Server(conf, __name__, wsgi_app, host="127.0.0.1", port=port)
     server.start()
