@@ -10,8 +10,8 @@ def start_server2():
     server2 = start_server(CONF,
                            'test-paste-2.ini',
                            2327)
+    time.sleep(2000)
 
 if __name__ == "__main__":
     start_server2()
-    time.sleep(2000)
 
