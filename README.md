@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/platform9/openstack-opentracing.svg?branch=ver-0.1)](https://travis-ci.org/platform9/openstack-opentracing)
+[![PyPI version](https://badge.fury.io/py/openstack-opentracing.svg)](https://badge.fury.io/py/openstack-opentracing)
 # openstack-opentracing
 This library provides a simple (alpha quality) implementation of a wsgi middleware that can be inserted into
 OpenStack APIs and can provide rudimentary tracing.
