@@ -67,8 +67,7 @@ class JaegerMiddleware(ConfigurableMiddleware):
         tracer = config.initialize_tracer()
 
         # Monkey patch different code paths
-        install_patches(patchers=['opentracing_instrumentation.client_hooks.sqlalchemy.install_patches',
-            'opentracing_instrumentation.client_hooks.urllib.install_patches',
+        install_patches(patchers=['opentracing_instrumentation.client_hooks.urllib.install_patches',
             'opentracing_instrumentation.client_hooks.urllib2.install_patches',
             'opentracing_instrumentation.client_hooks.requests.install_patches',
             'opentracing_instrumentation.client_hooks.tornado_http.install_patches',
