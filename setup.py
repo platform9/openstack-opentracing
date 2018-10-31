@@ -19,5 +19,5 @@ setup(
         ],
     scripts = [],
     package_data = {},
-    version='0.2.0.experiment1'
+    version='0.2.0-test1'
 )
