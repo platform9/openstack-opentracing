@@ -66,14 +66,18 @@ class JaegerMiddleware(ConfigurableMiddleware):
         # this call also sets opentracing.tracer global variable
         tracer = config.initialize_tracer()
 
-        # Monkey patch different code paths
-        install_patches(patchers=['opentracing_instrumentation.client_hooks.urllib.install_patches',
-            'opentracing_instrumentation.client_hooks.urllib2.install_patches',
-            'opentracing_instrumentation.client_hooks.requests.install_patches',
-            'opentracing_instrumentation.client_hooks.tornado_http.install_patches',
-            'openstack_opentracing.memcache_tracer.install_patches'
-        ])
-        logger.info("Opentracing initialized for service_name %s", config.service_name)
+        if tracer:
+            # Monkey patch different code paths
+            install_patches(patchers=['opentracing_instrumentation.client_hooks.sqlalchemy.install_patches',
+                'opentracing_instrumentation.client_hooks.urllib.install_patches',
+                'opentracing_instrumentation.client_hooks.urllib2.install_patches',
+                'opentracing_instrumentation.client_hooks.requests.install_patches',
+                'opentracing_instrumentation.client_hooks.tornado_http.install_patches',
+                'openstack_opentracing.memcache_tracer.install_patches'
+            ])
+            logger.info("Opentracing initialized for service_name %s", config.service_name)
+        else:
+            logger.info("Opentracing already initialized skipping the patches")
         return super(JaegerMiddleware, cls).factory(global_conf, **local_conf)
 
     def __init__(self, application, conf=None):
