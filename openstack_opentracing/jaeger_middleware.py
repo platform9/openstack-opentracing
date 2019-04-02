@@ -72,7 +72,8 @@ class JaegerMiddleware(ConfigurableMiddleware):
             'opentracing_instrumentation.client_hooks.urllib2.install_patches',
             'opentracing_instrumentation.client_hooks.requests.install_patches',
             'opentracing_instrumentation.client_hooks.tornado_http.install_patches',
-            'openstack_opentracing.memcache_tracer.install_patches'
+            'openstack_opentracing.memcache_tracer.install_patches',
+            'openstack_opentracing.instrumentation.oslo_rpc.install_patches'
         ])
         logger.info("Opentracing initialized for service_name %s", config.service_name)
         return super(JaegerMiddleware, cls).factory(global_conf, **local_conf)
