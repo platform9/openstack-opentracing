@@ -22,7 +22,7 @@ from threading import Lock
 from tornado.httputil import url_concat
 import random, json, requests
 import eventlet
-import httplib
+import http.client
 
 ZERO_SAMPLING_PROBABILITY = 0.0
 

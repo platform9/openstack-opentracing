@@ -42,7 +42,7 @@ def start_server(conf, paste_file, port):
 
 def start_server1():
     CONF = cfg.CONF
-    print "Starting Server 1"
+    print("Starting Server 1")
     server1 = start_server(CONF,
                            'test-paste.ini',
                            2326)

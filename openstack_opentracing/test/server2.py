@@ -6,7 +6,7 @@ from openstack_opentracing.test.server1 import start_server
 
 def start_server2():
     CONF = cfg.CONF
-    print "Starting Server 2"
+    print("Starting Server 2")
     server2 = start_server(CONF,
                            'test-paste-2.ini',
                            2327)

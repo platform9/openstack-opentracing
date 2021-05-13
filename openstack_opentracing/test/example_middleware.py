@@ -14,18 +14,18 @@ class ExampleMiddleware(ConfigurableMiddleware):
     @webob.dec.wsgify()
     def __call__(self, request):
         try:
-            print "Middleware called"
+            print("Middleware called")
             resp = requests.get('http://127.0.0.1:2328/v1/check')
             if not resp.status_code == 200:
-                print "Example Error %s " % str(resp.status_code)
+                print("Example Error %s " % str(resp.status_code))
             else:
-                print "Example Passed Test: %s" % str(resp.text)
+                print("Example Passed Test: %s" % str(resp.text))
             response = request.get_response(self.application)
             return self.process_response(response)
         except:
             # TODO: Use logging instead of stdout
             import sys, traceback
             e = sys.exc_info()[0]
-            print "Error: %s" % str(e)
+            print("Error: %s" % str(e))
             traceback.print_exc(file=sys.stdout)
             raise
