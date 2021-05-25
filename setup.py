@@ -19,5 +19,5 @@ setup(
         ],
     scripts = [],
     package_data = {},
-    version='0.3.45'
+    version='0.1.44.py3dev'
 )
