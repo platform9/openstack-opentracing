@@ -14,7 +14,7 @@ def deadend():
 def forward():
     print('Got request for forward, getting data from deadend')
     resp = requests.get('http://127.0.0.1:2327/v1/deadend')
-    print("Forwarder made request to deadend got %s" % str(resp.text))
+    print(("Forwarder made request to deadend got %s" % str(resp.text)))
     return "Done with the request %s" % str(resp.text)
 
 @app.route('/v1/check', methods=['GET'], strict_slashes= False)
